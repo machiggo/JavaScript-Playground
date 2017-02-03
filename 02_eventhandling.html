@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Übung Eventhandling</title>
+	<style>
+		#hover div {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border: 1px solid black;
+        }
+	</style>
+<!--	<script src="02_eventhandling.js"></script> -->
+	<script src="02_eventhandling1.js"></script>
+</head>
+<body>
+	<div id="hover">
+		<h1>1. Eventlistener / Eventobjekt</h1>
+		<h2>Hoverzähler</h2>
+		<p>Diese Div-Element können zählen, bzw. Sie sollen diese Funktion mit Javascript einbauen. Immer wenn der Mauszeiger über eines der div's fährt (mouseover), soll die Zahl darin um eins erhöht werden.</p>
+		<div id="zaehler1">0</div>
+		<div id="zaehler2">0</div>
+		<div id="zaehler3">0</div>
+		<div id="zaehler4">0</div>
+		<div id="zaehler5">0</div>
+	</div>
+	<hr>
+	<div>
+        <h2>2. Eigenschaften und Attribute auslesen</h2>
+		<p>Wenn die Seite vollständig geladen ist (onload), soll zuerst der Inhalt des divs#ausgabe gelöscht werden. Lesen Sie die Daten die Sie in der Beispielausgabe sehen können aus und schreiben Sie die Information für den aktuell geklickten Link in den div-ausgabe.<br></p>
+        <ul>
+            <li><a id="link-01" text="01" href="#">Seite1</a></li>
+            <li><a id="link-02" text="02" href="#">Seite2</a></li>
+            <li><a id="link-03" text="03" href="#">Seite3</a></li>
+            <li><a id="link-04" text="04" href="#">Seite4</a></li>
+        </ul>
+        <div id="ausgabe">Beispielausgabe:<br>
+            Die id des geklickten links <b>link-01</b>.<br>
+            Die Zahl <b>01</b><br>
+            Der Textknoten: <b>Seite1</b><br>
+		</div>
+	 </div>
+        <!--
+		Wenn die Seite vollständig geladen ist (onload), soll zuerst der Inhalt des divs#ausgabe gelöscht werden.
+
+        Lesen Sie die Daten die Sie in der Beispielausgabe sehen können aus und schreiben Sie die Information für den aktuell geklickten Link in den div-ausgabe.
+
+        Alle Fett markierten Bereiche in der Beispielausgabe sollen beim Klicken auf den Link ausgelesen werden.
+        Die id des geklickten links <b>link-01</b>.<br>
+        Die Zahl <b>01</b><br>
+        Der Textknoten: <b>Seite1</b><br>
+        -->
+   
+	<noscript>
+		<img src="../../_lib/img/noscript.png" alt="Um den Funktionsumfang der Seite nutzen zu können, aktivieren Sie bitte JavaScript." title="JavaScript noscript">
+	</noscript>
+</body>
+</html>

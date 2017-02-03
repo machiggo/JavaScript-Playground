@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Übung</title>
+	<script>
+		var daten = {
+			dacia : {
+				name : "Dacia Sandero",
+				preis : "6890€"
+			},
+			vw : {
+				name : "Golf Sportsvan ALLStar",
+				preis : "24.400€"
+			},
+			bmw : {
+				name : "BMW 5 Limousine",
+				preis : "40.700€"	
+			}
+		};
+		//Übersicht Objekt daten 
+		console.dir( daten );
+		//Übersicht des Objekts dacia in Objekt daten
+		console.dir( daten.dacia ); // Datentyp: object
+		//Aus Unterobjekt dacia die Eigenschaft name auslesen
+		console.log( daten.dacia.name ); // Datentyp: string
+		console.log( daten.dacia["name"] ); // Datentyp: string
+		//Aus Unterobjekt dacia die Eigenschaft preis auslesen
+		console.log( daten.dacia.preis ); // Datentyp: string
+		////////////////////////////////////////////////////////////////////////////////////
+		// Sehr ausführlich, im Detail erklärt											  //
+		////////////////////////////////////////////////////////////////////////////////////
+		/*function zeigeDaten() {
+			//------------------ Erklärung [] vs . ------------------
+			console.log(this.id);
+			console.log(this["id"]);
+			//console.log(daten[this.id]);
+			var link = this.id; //=> "dacia" || "vw" || "bmw"
+			//.link versucht die Eigenschaft link auszulesen
+			console.log( daten.link );
+			//.this versucht die Eigenschaft this auszulesen
+			console.log( daten.this );
+			//[link] hier wird der Inhalt von link, eine Zeichenkette, erst ausgelesen 
+			// => daten["dacia"] || daten["vw"] || daten["bmw"]
+			console.log( daten[link] ); 
+			
+			//------------------ Ausgabe der Daten ------------------
+			var ausgabeContainer = document.getElementById("ausgabe");
+			var html = "";
+			html = daten[this.id].name + " " + daten[this.id].preis;
+			ausgabeContainer.innerHTML = html;
+		}
+		
+		
+		window.onload = function() {
+			var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			console.log(daten_a);
+			
+			for(var i = 0; i < daten_a.length; i++) {
+				daten_a[i].onclick = zeigeDaten;
+				
+			}
+		};*/
+		////////////////////////////////////////////////////////////////////////////////////
+		// Einfache Lösung										  						  //
+		////////////////////////////////////////////////////////////////////////////////////
+		/*window.onload = function() {
+			var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			console.log(daten_a);
+			
+			for(var i = 0; i < daten_a.length; i++) {
+				daten_a[i].onclick = function() {
+					document.getElementById("ausgabe").innerHTML = 
+					daten[this.id].name + " " + daten[this.id].preis;
+				}
+				
+			}
+		};*/
+		////////////////////////////////////////////////////////////////////////////////////
+		// Teil 2 Link alle									  						      //
+		////////////////////////////////////////////////////////////////////////////////////
+		/*window.onload = function() {
+			document.getElementById("daten").innerHTML += '<li><a id="alle" href="#">Alle Daten ausgeben</a></li>';
+		
+			var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			console.log(daten_a);
+			//Läuft wenn die Seite geladen wurde
+			for(var i = 0; i < daten_a.length; i++) {
+				daten_a[i].onclick = zeigeDaten;
+			}
+		};
+		
+		//wird bei jedem klicken aufgerufen
+		function zeigeDaten() {
+			var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			var html = "";
+			// this ist ein Zeiger auf den geklickten Link
+			if( this.id !== "alle" ) {
+				html = daten[this.id].name + " " + daten[this.id].preis;
+			} else {
+				// -------------------- Ausgabe ohne Schleife hardkodiert ------------
+				//html += daten.dacia.name + " " + daten.dacia.preis + "<br>";
+				//html += daten.vw.name + " " + daten.vw.preis + "<br>";
+				//html += daten.bmw.name + " " + daten.bmw.preis + "<br>";
+				// -------------------- for - Schleife -------------------------------
+				//daten_a.length-1 wenn id="alle" der letzte link ist 
+				for(var j = 0; j < daten_a.length; j++) {
+					if( this.id !== daten_a[j].id )  {
+					html += daten[daten_a[j].id].name + " " + daten[daten_a[j].id].preis + "<br>";
+					}
+				}
+			}
+			
+			document.getElementById("ausgabe").innerHTML = html;
+		}*/
+		
+		////////////////////////////////////////////////////////////////////////////////////
+		// Optimiert        								  						      //
+		////////////////////////////////////////////////////////////////////////////////////
+		window.onload = function() {
+			document.getElementById("daten").innerHTML += '<li><a id="alle" href="#">Alle Daten ausgeben</a></li>';
+		
+			var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			console.log(daten_a);
+			//Läuft wenn die Seite geladen wurde
+			for(var i = 0; i < daten_a.length; i++) {
+				daten_a[i].onclick = function() { zeigeDaten(this,daten_a);};
+			}
+		};
+		
+		//wird bei jedem klicken aufgerufen
+		function zeigeDaten(link, collection_a) {
+			//var daten_a = document.getElementById("daten").getElementsByTagName("a");
+			var html = "";
+			// link ist ein Zeiger auf den geklickten Link
+			if( link.id !== "alle" ) {
+				html = daten[link.id].name + " " + daten[link.id].preis;
+			} else {
+				// -------------------- Ausgabe ohne Schleife hardkodiert ------------
+				/*html += daten.dacia.name + " " + daten.dacia.preis + "<br>";
+				html += daten.vw.name + " " + daten.vw.preis + "<br>";
+				html += daten.bmw.name + " " + daten.bmw.preis + "<br>";*/
+				// -------------------- for - Schleife -------------------------------
+				//daten_a.length-1 wenn id="alle" der letzte link ist 
+				for(var j = 0; j < collection_a.length; j++) {
+					if( link.id !== collection_a[j].id )  {
+					html += daten[collection_a[j].id].name + " " + daten[collection_a[j].id].preis + "<br>";
+					}
+				}
+			}
+			
+			document.getElementById("ausgabe").innerHTML = html;
+		}
+		
+		
+		
+		/*
+		1. Wenn die Seite vollständig geladen wurde binden Sie mit JS an die Hyperlinks (a) in der 
+		ul#daten einen onlick-Eventhandler. 
+
+		Wird einer der Link angeklickt soll aus dem Objekt daten der zugehörige Datensatz in den 
+		div#ausgabe geschrieben werden.
+
+
+		Beispiel:
+		<li><a href="#" id="dacia">Dacia</a></li>
+		===> dacia : {
+				name : "Dacia Sandero",
+				preis : "6890€"
+			}
+
+		INFO: Sie benötigen für die Ausgabe keine Schleife!
+
+
+		2. Erweitern Sie die Liste um einen vierten Listenpunkt 
+		<li><a href="#" id="alle">Alle</a></li>
+
+		Wenn dieser Link geklickt wird geben Sie alle Fahrzeugdaten auf einmal aus.	Das ganze funktioniert ohne Schleife ist aber mit for-in einfacher zu lösen:
+		https://www.mediaevent.de/javascript/Basis-Schleifen-for-while.html
+
+		 */
+		
+
+	</script>
+</head>
+<body>
+	<h1>Fahrzeugdaten</h1>
+	<ul id="daten">
+		<li><a href="#" id="dacia">Dacia</a></li>
+		<li><a href="#" id="vw">Volkswagen</a></li>
+		<li><a href="#" id="bmw">BMW</a></li>
+	</ul>
+	<div id="ausgabe"></div>
+</body>
+</html>

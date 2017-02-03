@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Übung Formular</title>
+	<style>
+		body {
+			font-family: Consolas;
+		}
+		button {
+			margin: 10px 0;
+		}
+		input, label {
+			display:block;
+		}
+
+		input[type=checkbox], input[type=radio] {
+			display:inline;
+		}
+		
+		/*Fieldset mit Fehler hervorheben*/
+        .error_fieldset {
+            border-color: red;
+        }
+        /*Fehler div im fieldset einblenden*/
+        .error_msg {
+            color:red;
+            width:270px;
+        }
+	</style>
+	<script>
+		function checkForm(e) {
+			e.preventDefault();
+			console.log("e.target === this //=> ", e.target === this);
+			console.log(e);
+			//fieldsets einlesen
+			var fieldset = document.getElementsByTagName("fieldset");
+			//die Klasse an allen fieldsets entfernen
+			for(var i = 0; i < fieldset.length; i++) {
+				fieldset[i].className = "";
+			}
+			//Formularfelder einlesen
+			var f = this; // oder e.target
+			var vorname = f.vorname.value.trim();
+			var nachname = f.nachname.value.trim();
+			var geschlecht_radio = f.geschlecht;
+			var sprache_check = [];
+			sprache_check.push(f.html);
+			sprache_check.push(f.css);
+			sprache_check.push(f.js);
+			var sprache_select = f.sprache;
+			var agb_check = f.agb;
+			
+			var fehler = []; //Sammelt Fehlermeldungen
+			//Fehlercontainer einlesen
+			var ul_fehlerliste = document.getElementById("fehlerliste");
+			//Fehlercontainer vor jeder Prüfung leeren
+			ul_fehlerliste.innerHTML = "";
+			
+			// Prüfung type=text 
+			// !vorname - !"" //=> !false //=> true FEHLERMELDUNG 
+			// !vorname - !"a" //=> !true //=> false keine Fehlermeldung 
+			if( vorname === "" ) {
+				fehler.push("Vorname darf nicht leer sein");
+				fieldset[0].className = "error_fieldset";
+				//console.log(f.vorname.parentElement);
+				//f.vorname.parentElement.className = "error_fieldset";
+			}
+			
+			if( nachname === "" ) {
+				fehler.push("Nachname darf nicht leer sein");
+				fieldset[0].className = "error_fieldset";
+			}
+			// !geschlecht_radio[0].checked && !geschlecht_radio[1].checked
+			if( !(geschlecht_radio[0].checked || geschlecht_radio[1].checked) ) {
+				fehler.push("Geschlecht wählen!");
+				fieldset[1].className = "error_fieldset";
+			}
+			
+			var checkboxen_ok = false;
+			//&& !checkboxen_ok - Schleife wird verlassen sobald eine angewählte
+			//checkbox gefunden wurde. Keine unnötigen Prüfungen
+			for(var i = 0; (i < sprache_check.length) && !checkboxen_ok; i++) {
+				if( sprache_check[i].checked ) {
+					checkboxen_ok = true;	
+				}
+			}
+			
+			if(!checkboxen_ok) {
+				fehler.push("Wählen Sie Ihre Lieblingssprache");
+				fieldset[2].className = "error_fieldset";
+			}
+
+
+			if(sprache_select.options.selectedIndex === 0) {
+				fehler.push("Wählen Sie welche Sprache Sie noch lernen wollen");
+				fieldset[3].className = "error_fieldset";
+			}
+			
+			if(!agb_check.checked) {
+				fehler.push("AGB akzeptieren");
+				fieldset[4].className = "error_fieldset";
+			}
+			
+			
+			//Fehlerausgabe oder Formular absenden
+			// fehler.length - Nur 0 ist false, alle anderen Zahlen sind true 
+			if(fehler.length > 0) {
+				//ul_fehlerliste.innerHTML = "<li>" + fehler.join("</li><li>") + "</li>";
+				
+				//Hilfsvariable anstelle eines innerHTML innerhalb der Schleife
+				//ist wesentlich schneller. Jeder Aufruf von innerHTML zwingt den 
+				//Browser dazu die Seite neu zu Rendern.
+				var ausgabe = "";
+				for(var i = 0; i < fehler.length; i++) {
+					 ausgabe += "<li>" + fehler[i] + "</li>";
+				}
+				ul_fehlerliste.innerHTML = ausgabe;
+				
+			} else {
+				alert("Formular wird versendet");
+			}
+			
+			
+			return false;
+		}
+	
+		window.onload = function(){
+			//document.getElementsByTagName("form")[0]
+			//onsubmit muss am Formular gebunden werden
+			document.forms[0].onsubmit = checkForm;
+			
+			/*var fieldset = document.getElementsByTagName("fieldset");
+			console.log(fieldset[0].className);
+			//className liest/schreibt als Zeichenkette 
+			//kommen meherer Klassen vor muss man mit Verkettung arbeiten
+			fieldset[0].className = "error_fieldset";*/
+		}
+	</script>
+</head>
+<body>
+	<form method="get" action="../pages/form.php">
+		<fieldset>
+			<legend>* Persönliche Angaben</legend>
+			<label for="vorname">Vorname</label>
+			<input type="text" id="vorname" name="vorname">
+			
+			<label for="nachname">Nachname</label>
+			<input type="text" id="nachname" name="nachname">
+		</fieldset>
+		<fieldset>
+			<legend>* Geschlecht</legend>
+			Weiblich: <input type="radio" id="radio_weiblich" name="geschlecht" value="w">
+			Männlich: <input type="radio" id="radio_männlich" name="geschlecht" value="m">
+		</fieldset>
+		<fieldset>
+			<legend>* Was ist Ihre Lieblingssprache?</legend>
+			<input type="checkbox" id="html" name="HTML"> HTML |
+			<input type="checkbox" id="css" name="CSS"> CSS |
+			<input type="checkbox" id="js" name="JavaScript"> JavaScript 
+		</fieldset>
+		<fieldset>
+			<legend>* Welche Sprache wollen Sie noch lernen?</legend>
+			<select name="sprache" id="sprache">
+				<option value="">Bitte wählen</option>
+				<option value="php">PHP</option>
+				<option value="phyton">Phyton</option>
+				<option value="dart">Dart</option>
+				<option value="hack">Hack</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<legend>* AGBs</legend>
+			AGB akzeptieren <input type="checkbox" id="agb" name="agb">
+		</fieldset>
+		<input type="submit" id="submit_btn" name="submit_btn" value="Absenden">
+		<input type="button" id="clearForm" value="Alles löschen">
+	</form>
+	<p>Alle mit * gekennzeichneten Felder sind Pflichtfelder</p>
+	<ul id="fehlerliste"></ul>
+	<noscript>
+		<img src="../../_lib/img/noscript.png" alt="Um den Funktionsumfang der Seite nutzen zu können, aktivieren Sie bitte JavaScript." title="JavaScript noscript">
+	</noscript>
+</body>
+</html>

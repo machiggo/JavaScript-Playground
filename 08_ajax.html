@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Übung</title>
+	<script src="08_ajax.js"></script> 
+</head>
+<body>
+	<h1>Ajax Übung</h1>
+	<h2>links.json</h2>
+	<div id="ausgabe_links"></div>
+	<!--
+	links.json
+	Wenn die Seite vollständig geladen wurde fordern Sie über AJAX 
+	die Datei links.json an und geben die beiden Links in div#ausgabe_links aus.
+	-->
+	
+	
+	
+	<h2>personen.json</h2>
+	<ul>
+		<li><a href="#" id="pnr6714">Maier Hans</a></li>
+		<li><a href="#" id="pnr81343">Schmitz Peter</a></li>
+	</ul>
+	<div id="ausgabe_personen"></div>
+	<!--
+	personen.json
+	Wenn die Seite vollständig geladen wurde binden Sie an den Hyperlinks einen onclick-Eventhandler. Jeder Link soll eine Ajax-Anfrage auf personen.json starten.
+	Es sollen aber nur die Daten zum geklickten Link ausgegeben werden.
+	
+	a#pnr6714 wird angeklickt:
+	Vorname: Hans,
+	Nachname: Meier,
+	Gehalt: 3500.00 Euro,
+	Geburtsdatum: 14.03.1972
+	-->
+	
+	<noscript>
+		<img src="../../_lib/img/noscript.png" alt="Um den Funktionsumfang der Seite nutzen zu können, aktivieren Sie bitte JavaScript." title="JavaScript noscript">
+	</noscript>
+</body>
+</html>

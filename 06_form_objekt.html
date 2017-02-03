@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Übung</title>
+	<style>
+		label, input, button {
+			display:block;
+		}
+	</style>
+	<script>
+		/////////////////////////////////////////////////////////////////////////////
+		//Noch nicht final, wird noch bearbeitet								   //
+		/////////////////////////////////////////////////////////////////////////////
+		var formularValidierung = {
+			formInit : function() {
+				//Durch .bind(formularValidierung) durch das window.onload Event ist this hier das //Objekt formularValidierung und nicht das window-Objekt
+				var inputs = document.getElementsByTagName("input");
+				for(var i = 0; i < inputs.length; i++) {
+					this[inputs[i].id]  = ""; //this ist hier formularValidierung
+				}
+				document.getElementById("checkForm").onclick = this.formValidate.bind(this);
+				//this.formValidate würd in formValidate unter this dern Button#checkForm enthalten
+				//durch .bind(this) wird der Zeiger auf das Objekt weitergegeben
+				//in formValidate ist this wieder das Objekt formularValidierung
+			},
+			
+			formValidate : function() {
+				console.log(this); //this ist hier formularValidierung
+				var error = false;
+				var inputs = document.getElementsByTagName("input");
+				for(var i = 0; i < inputs.length; i++) {
+					if(inputs[i].value.trim() === "") {
+						document.getElementById("fehler_"+inputs[i].id).innerHTML = inputs[i].id + " darf nicht leer sein";
+						error = true;
+					} else {
+						document.getElementById("fehler_"+inputs[i].id).innerHTML = "";
+					}
+				}
+				
+				if(!error) { 
+					for(var i = 0; i < inputs.length; i++) {
+						this[inputs[i].id]  = inputs[i].value; //this ist hier formularValidierung
+					}	
+					console.log(this);
+				}
+			}
+		}
+		
+		/*window.onload = function() {
+			formularValidierung.formInit();
+		}*/
+		
+		window.onload = formularValidierung.formInit.bind(formularValidierung);
+		//bind(x) erzeugt eine Kopie der Funktion, in der this auf den 
+		//Parameter x referenziert. this = formularValidierung
+		/*
+		JavaScript Code bitte in diesem Skriptcontainer schreiben!
+		
+		1. Erzeugen Sie ein Objek formularValidierung
+		
+		Das Objekt soll eine Methode formInit haben die alle Inputfelder des Formulars einliest wenn die Seite vollständig geladen wurde.
+		Für jedes Inputfeld soll eine Eigenschaft im Objekt angelegt werden die mit einem Leerstring 
+		vorbelegt wird.
+		Beispiel:
+		input#vorname ====> this.vorname = ""
+
+
+		Des weiteren soll formInit am button#checkForm einen onlick-Eventhandler bindet der die Methode formValidate beim Klicken aufruft.
+
+		Die Methode formValidate soll alle input-Felder des Formulars auf Fehler überprüfen.
+		Ein Fehler tritt auf wenn das Formularfeld leer ist.
+		Ist ein Feld leer geben Sie eine Fehlermeldung im zugehörigen div aus.
+		input#vorname ist leer  =====> div#fehler_vorname Meldung: Vorname darf nicht leer sein.
+
+		Sind alle Felder korrekt ausgefüllt schreiben Sie die value aus den input-Feldern in 
+		die zugehörigen Objekteigenschaften und geben das gesamte Objekt in die Konsole aus.
+
+
+
+		2. Erweitern Sie das Formular um ein oder mehrere Eingabefelder mit zugehörigen Fehlerdivs.
+		Müssen Sie im Objekt noch etwas ändern?
+
+		*/
+
+	</script>
+</head>
+<body>
+	<form action="#" method="get" name="person">
+		<label for="vorname">Vorname</label>
+		<input type="text" id="vorname" name="vorname">
+		<div id="fehler_vorname"></div>
+
+		<label for="nachname">Nachname</label>
+		<input type="text" id="nachname" name="nachname">
+		<div id="fehler_nachname"></div>
+
+		<button type="button" id="checkForm">Absenden</button>
+	</form>
+</body>
+</html>

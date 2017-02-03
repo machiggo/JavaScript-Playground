@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Donuts</title>
+	<style>
+		body {
+		  font:14px arial;
+		  text-align:center;
+		}
+
+		#frame {
+		  margin-top:15px;
+		  width:460px;
+		  margin-left:auto;
+		  margin-right:auto;
+		}
+
+		#left {
+		  float:left;
+		  width:130px;
+		}
+
+		div.heading {
+		  font:20px arial;
+		  font-weight:bold;
+		  margin-bottom:5px;
+		}
+
+		div.subheading {
+		  font:15px arial;
+		  font-style:italic;
+		  margin-bottom:10px;
+		}
+
+		div.field {
+		  margin-bottom:5px;
+		  text-align:right;
+		}
+		#fehler{
+			margin:2%;
+			padding:2%;
+			border:2px dotted red;
+			background: #f3f3f3;
+			display:none;
+		}
+		[readonly="readonly"]{
+			text-align:right;
+		}
+		input {
+			
+			padding-right:2%;
+		}
+		footer {
+			background:#13a538;
+			border: 1px dotted #ffcc00;
+			margin-top:3%;
+		}
+		footer p {
+			color:#fff;
+		}
+		img {
+			width:100%;
+			margin-top:4%;
+		}
+		a{
+			text-decoration:none
+		}
+
+	</style>
+	<script>
+		/*
+		Donuts 
+		1. Legen Sie den Preis für die Donuts und die Mehrwertsteuer als Konstanten fest.
+		Donutpreis 0.50 
+		Steuersatz 16% 
+		
+		2. Immer wenn der Button Bestellen gedrückt wird sollen folgende Felder validiert werden:
+		
+		### Name : 
+		Darf nicht leer sein und darf keine Zahl enthalten
+		
+		### Anzahl Kuchendonuts / Anzahl glasierte Donuts
+		Eines der Felder Anzahl Kuchendonuts oder Anzahl glasierte Donuts muss ausgefüllt sein. 
+		Es ist möglich das beide Felder ausgefüllt sind aber nicht erlaubt das keines der Felder ausgefüllt ist.
+		
+		Anzahl Kuchendonuts : Darf nur Zahlen enthalten 
+		Anzahl glasierte Donuts : Darf nur Zahlen enthalten 
+		
+		Wenn ein Feld nicht korrekt ausgefüllt wurde geben Sie eine Fehlermeldung im div#fehler aus. 
+		Beispiel:
+		Name ist leer und weder Anzahl Kuchendonuts noch Anzahl glasierte Donuts enthält eine Eingabe
+
+		===> <div id="fehler">
+				<p>Name darf nicht leer sein</p>
+				<p>Wählen Sie Anzahl Kuchendonuts und/oder Anzahl glasierte Donuts</p>
+			</div>
+		
+		
+		
+		3. Wurden die Felder aus Punkt 2 validiert und enthalten korrekte Eingaben berechnen Sie den Preis 
+		für die Donuts und die enthaltene Mehrwertsteuer aus und tragen diese in die vorgegebenen Felder ein 
+		
+		Zwischensumme: Donut Preis ohne Mehrwertsteuer
+		Steuer: Mehrwertsteuer
+		Summe: Zwischensumme zzgl. Mehrwertsteuer
+		*/
+	
+		function bestellungAbschicken() {
+			const donutpreis = 0.50;
+			const steuersatz = 16;
+			var id_fehler = document.getElementById("fehler");
+			var name_val = document.getElementById("name").value.trim();
+			var kuchendonuts_val = document.getElementById("kuchendonuts").value.trim();
+			var glasiertedonuts_val = document.getElementById("glasiertedonuts").value.trim();
+			var id_zwischensumme = document.getElementById("zwischensumme");
+			var id_steuer = document.getElementById("steuer");
+			var id_summe = document.getElementById("summe");
+			var summe = 0;
+			var steuer = 0;
+			var dounts = kuchendonuts_val + glasiertedonuts_val;
+			id_fehler.innerHTML = "";
+			id_zwischensumme.value  = "";
+			id_steuer.value = "";
+			id_summe.value = "";
+			
+			if (name_val === ""){
+				id_fehler.innerHTML = "<p>Eingabe darf nicht leer sein</p>";
+				id_fehler.style ="display:block";
+			} else if ( name_val.length < 4 ) {	
+				id_fehler.innerHTML = "<p>Eingabe Fehler: Name, mindestens 4 Buchstaben! </p>";
+				id_fehler.style ="display:block";
+			} else if ( isNaN(dounts) === true ) {
+				id_fehler.innerHTML = "<p>Eingabe muss eine Zahl sein. </p>";
+				id_fehler.style ="display:block";
+			} else if (kuchendonuts_val + glasiertedonuts_val < 1){
+				id_fehler.innerHTML = "<p>Wählen Sie Anzahl Kuchendonuts und/oder Anzahl glasierte Donuts</p>";
+				id_fehler.style ="display:block";
+			} else {
+				id_fehler.style ="display:none";
+				dounts = Number(kuchendonuts_val) + Number(glasiertedonuts_val);
+				zwischensumme_val = dounts * donutpreis;
+				steuer = zwischensumme_val * steuersatz / 100;
+				summe = zwischensumme_val + steuer;
+				id_zwischensumme.value  = zwischensumme_val.toFixed(2) + "€";
+				id_steuer.value = steuer.toFixed(2) + "€";
+				id_summe.value = summe.toFixed(2) + "€";
+				
+			}
+			
+			console.log("Summe: ",id_summe.value);
+			
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="frame">
+      <div class="heading">
+		<a href="#" title="Dounts">
+
+		<h2>Donuts - Immer zur rechten Zeit</h2>	  
+	  </div>
+      <div class="subheading">Alle Kuchendonuts oder glasierten Donuts 50 Cent!</div>
+      
+      <form name="bestellformular" action="#" method="POST">
+        <div class="field">
+          Name: <input type="text" id="name" name="name" value="" />
+        </div>
+        <div class="field">
+        Anzahl Kuchendonuts: <input type="text" id="kuchendonuts" name="kuchendonuts" value="" />
+        </div>
+        <div class="field">
+        Anzahl glasierte Donuts: <input type="text" id="glasiertedonuts" name="glasiertedonuts" value="" />
+        </div>
+		<hr>
+        <div class="field">
+        Zwischensumme: <input type="text" id="zwischensumme" name="zwischensumme" value="" readonly="readonly" />
+        </div>
+        <div class="field">
+        Steuer: <input type="text" id="steuer" name="steuer" value="" readonly="readonly"/>
+        </div>
+        <div class="field">
+        Summe: <input type="text" id="summe" name="summe" value="" readonly="readonly" />
+        </div>
+        <div class="field">
+        <input type="button" value="Bestellen" onclick="bestellungAbschicken();" />
+        </div>
+      </form>
+	<div id="fehler"></div>
+	<div id="ausgabe"></div>
+	<noscript>
+		<img src="../../_lib/img/noscript.png" alt="Um den Funktionsumfang der Seite nutzen zu können, aktivieren Sie bitte JavaScript." title="JavaScript noscript">
+	</noscript>
+	<footer>
+	<p>Hier könnte Ihre Werbung stehen</p>
+	</footer>
+	</div>
+</body>
+</html>

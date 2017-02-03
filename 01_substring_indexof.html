@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Übung substring / indexOf</title>
+	<script>
+	function rechne(){
+		var eingabe = document.getElementById("rechnung").value.trim()
+		var ergebnis = document.getElementById("ergebnis");
+		ergebnis.innerHTML = "";
+		var a=0;
+		var b=0;
+		if (eingabe.indexOf("+")>-1){
+			a = Number(eingabe.substring(0,eingabe.indexOf("+")));
+			b = Number(eingabe.substring(eingabe.indexOf("+")+1,eingabe.length));
+			console.log(a,b,eingabe.length);
+			ergebnis.innerHTML = a+b;
+		} else if (eingabe.indexOf("-")>-1){
+			a = eingabe.substring(0,eingabe.indexOf("-"));
+			b = eingabe.substring(eingabe.indexOf("-")+1,eingabe.length);
+			console.log(a,b,eingabe.length);
+			ergebnis.innerHTML = a-b;
+		} else if (eingabe.indexOf("*")>-1){
+			a = eingabe.substring(0,eingabe.indexOf("*"));
+			b = eingabe.substring(eingabe.indexOf("*")+1,eingabe.length);
+			console.log(a,b,eingabe.length);
+			ergebnis.innerHTML = a*b;
+		} else if (eingabe.indexOf("/")>-1){
+			a = eingabe.substring(0,eingabe.indexOf("/"));
+			b = eingabe.substring(eingabe.indexOf("/")+1,eingabe.length);
+			console.log(a,b,eingabe.length);
+			ergebnis.innerHTML = a/b;
+		}
+		
+		
+		
+	}		/*
+		Einsteiger 1:
+		Schreiben Sie mit substring() und indexOf() eine Seite, auf der man eine Addition zweier Zahlen eingeben kann, also zum Beispiel „3+7“, die dann
+		das Ergebnis ausrechnet und ausgibt.
+		Arbeiten Sie zu beginn nur mit 2 Operanten und dem Additionsoperator 
+		3+7
+		123+10
+		12000+50000
+		
+		Einsteiger 2:
+		Erweitern Sie die Aufgabe dahingehen das nicht nur addiert werden kann.
+		3+7 
+		3-7
+		3*7
+		3/7 
+		
+		Danach bitte die Aufgaben von gestern lösen.
+		---------------------------------------------------------------------------
+		FREIWILLIG:
+		Fortgeschritten:		
+		Die direkt Auswertung der Eingabe mit eval ist ein Sicherheitsrisiko.
+		Wie kann man den Code dahingehend erweitern das beliebig viele 
+		Operanten und Operatoren eingegeben und berechnet werden können. 
+		
+		z.B. 
+		3+8+9+10
+		3+5*2-10
+		
+		Bedenken Sie Punkt vor Strich Rechnung
+	
+		*/
+	</script>
+</head>
+<body>
+	<h3>Rechnen</h3>
+	<input type="text" id="rechnung"/> = <span id="ergebnis"></span><br/>
+	<button type="button" onclick="rechne();">Klick mich!</button>
+	<noscript>
+		<img src="../../_lib/img/noscript.png" alt="Um den Funktionsumfang der Seite nutzen zu können, aktivieren Sie bitte JavaScript." title="JavaScript noscript">
+	</noscript>
+</body>
+</html>
