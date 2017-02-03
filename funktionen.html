@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JavaScript Variablen</title>
+</head>
+
+<body>
+	    
+		<p>Wie viele Finder halte ich hoch</p>
+		<select type="text" id="meineZahl">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select>
+		
+		<button id="versuche">Rate</button>
+		
+		<script>
+		
+			function raten (richtigeAntwort) {
+				
+					var schaetzung = Math.random();
+					schaetzung = schaetzung * 6;
+					schaetzung = Math.floor(schaetzung);
+					
+					if(schaetzung == richtigeAntwort) {
+						return (true);
+						
+						}else {
+							return (false);
+						}
+
+					
+			}
+		
+		
+
+			document.getElementById("versuche").onclick = function (){
+				var meineZahl = document.getElementById("meineZahl").value;
+				var erraten = false;
+				var anzahlDerVersuche = 1;
+				console.log("hier bin ich");
+				
+				while(erraten == false) {
+					
+					if(raten(meineZahl) == true) {
+						erraten = true;
+						alert("yeah richtig die Zahl ist " + schaetzung + " ich habe " + anzahlDerVersuche + " Versuche gebraucht");
+						
+						}else {
+							anzahlDerVersuche++;
+							console.log(anzahlDerVersuche)
+						}
+
+					
+					}
+					
+			
+			}
+	
+			/* function durchschnitt (a,b) {
+				return ((a + b + c)/3)
+			}
+			
+			var x = 5;
+			var y = 10;
+			var z = 15;
+				
+			alert (durchschnitt(x,y,z);   */			
+	    </script>
+</body>
+</html>

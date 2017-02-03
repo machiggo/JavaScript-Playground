@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JavaScript</title>
+	<style type="text/css">
+    	body {height:2000px;}
+		.float{}
+		.float p {line-height:130px;text-align:center;
+				border-radius: 65px;float:left;
+				border:3px solid black;height:130px;width:130px;
+				}
+		#kreis-rot{background-color:red;}
+		#kreis-blau{background-color:blue;}
+		#kreis-gelb{background-color:yellow;}
+		
+		#reset{clear:left;display:block;}
+		.float{}
+		
+    </style>
+	</head>
+
+	<body>
+    
+    	<p id="text">Hello World</p>
+    	<button id="myButton">Text ändern</button>
+        
+        <p id="zweitertext">Javascript ist</p>
+		<button id="zweiterButton">Text änderm</button>
+        
+        <p id="drittertext">ich finde Javascript ist...</p>
+		<button id="dritterButton">Text ändern</button>    
+        
+        <button id="styleText">Style den Text</button>
+        
+        <p id="mehrText">Alles endet, aber nie die Musik</p>
+        
+     	<div class="float">
+        
+        <p id="kreis-rot"> Kreis 1</p>
+        <p id="kreis-gelb"> Kreis 2</p>
+        <p id="kreis-blau"> Kreis 3</p>
+        
+        </div>
+        
+        <button id="reset">Kreise tauchen auf</button>
+        
+    	<script type="text/javascript">
+			document.getElementById("myButton").onclick = function() {
+				// document.getElementById("myButton").innerHTML = "Hallo Mario";
+				document.getElementById("myButton").innerHTML = "Hallo Mario";	
+    			}
+				
+			document.getElementById("myButton").onclick = function(){
+				document.getElementById("text").innerHTML = "<button> Hallo Mariooo </button>";
+    			}
+			
+			document.getElementById("zweiterButton").onclick = function() {
+				// document.getElementById("zweiterButton").innerHTML = "geil";
+				document.getElementById("zweitertext").innerHTML = "geil";
+				}
+				
+			document.getElementById("dritterButton").onclick = function() {
+				document.getElementById("drittertext").innerHTML = document.getElementById("drittertext").innerHTML - " ist";
+				}
+				
+			document.getElementById("styleText").onclick = function() {
+				 
+				document.getElementById("mehrText").style.color = "red";
+				document.getElementById("mehrText").style.fontSize = "30px"; 
+					}
+				
+			document.getElementById("reset").onclick = function() {
+				document.getElementById("kreis-rot").style.display = "inline";
+				document.getElementById("kreis-gelb").style.display = "inline";
+				document.getElementById("kreis-blau").style.display = "inline";
+					}
+				
+			document.getElementById("kreis-rot").onclick = function() {
+				document.getElementById("kreis-rot").style.display = "none";
+					}
+					
+			document.getElementById("kreis-blau").onclick = function() {
+				document.getElementById("kreis-blau").style.display = "none";
+					}
+					
+			document.getElementById("kreis-gelb").onclick = function() {
+				document.getElementById("kreis-gelb").style.display = "none";
+					}
+	       </script>
+    	
+	</body>
+</html>
